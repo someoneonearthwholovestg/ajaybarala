@@ -424,7 +424,7 @@ nav ul li a:hover::after { width: 100%; }
     display: none;
 }
 
-/* NEW: Profile Carousel Styles */
+/* NEW: Profile Carousel Styles - Centered Single Profile */
 .profile-carousel-container {
     width: 90%;
     max-width: 1400px;
@@ -432,11 +432,14 @@ nav ul li a:hover::after { width: 100%; }
     position: relative;
     padding: 10px 0;
     margin: 30px auto;
+    display: flex;
+    justify-content: center;
 }
 
 .profile-carousel-track {
     display: flex;
     transition: transform 1s ease-in-out;
+    justify-content: center;
 }
 
 .profile-carousel-card {
@@ -445,7 +448,7 @@ nav ul li a:hover::after { width: 100%; }
     height: 380px;
     background-color: white;
     border-radius: 15px;
-    margin: 0 15px;
+    margin: 0 auto;
     padding: 25px;
     text-align: center;
     display: flex;
@@ -524,38 +527,70 @@ nav ul li a:hover::after { width: 100%; }
     transform: translateY(-3px);
 }
 
+/* Hide carousel buttons since we only have one profile */
 .profile-carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: white;
-    color: #e74c3c;
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    display: none;
+}
+
+/* Contact Section - New Design */
+#contact {
+    transition: all 0.3s ease;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: nowrap;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.contact-item {
+    background: rgba(46, 204, 113, 0.05);
+    border-radius: 12px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
     cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.contact-item:hover {
+    background: rgba(46, 204, 113, 0.1);
+}
+
+.contact-icon {
+    width: 25px;
+    height: 25px;
+    background: #2ecc71;
+    color: white;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    transition: all 0.3s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    z-index: 10;
+    font-size: 0.8rem;
+    flex-shrink: 0;
 }
 
-.profile-carousel-btn:hover {
-    background-color: #e74c3c;
-    color: white;
-    transform: translateY(-50%) scale(1.1);
+.contact-text {
+    display: flex;
+    flex-direction: column;
 }
 
-.profile-carousel-btn.prev { left: 10px; }
-.profile-carousel-btn.next { right: 10px; }
+.contact-label {
+    font-size: 0.75rem;
+    color: #7f8c8d;
+}
 
-/* Contact Section - Optimized for faster rendering */
-#contact {
-    transition: all 0.3s ease;
+.contact-value {
+    font-size: 0.85rem;
+    color: #2c3e50;
+    font-weight: 500;
 }
 
 /* Android-specific optimizations */
@@ -770,10 +805,16 @@ nav ul li a:hover::after { width: 100%; }
         width: 110px; 
         height: 110px; 
     }
-    .profile-carousel-btn { 
-        width: 45px; 
-        height: 45px; 
-        font-size: 1.2rem; 
+    
+    /* Contact section responsive */
+    .contact-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .contact-item {
+        width: 100%;
+        max-width: 300px;
     }
 }
 @media (max-width: 480px) { 
@@ -793,17 +834,32 @@ nav ul li a:hover::after { width: 100%; }
     .profile-carousel-card { 
         width: 260px; 
         height: 300px; 
-        margin: 0 8px; 
+        margin: 0 auto; 
         padding: 20px; 
     }
     .profile-image { 
         width: 90px; 
         height: 90px; 
     }
-    .profile-carousel-btn { 
-        width: 36px; 
-        height: 36px; 
-        font-size: 1rem; 
+    
+    /* Contact section responsive */
+    .contact-item {
+        padding: 8px 10px;
+        gap: 5px;
+    }
+
+    .contact-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+    }
+
+    .contact-label {
+        font-size: 0.65rem;
+    }
+
+    .contact-value {
+        font-size: 0.75rem;
     }
 }
 </style>
@@ -1072,17 +1128,10 @@ nav ul li a:hover::after { width: 100%; }
     <h2>Connect With Us</h2>
     <p>Meet our team and get in touch with us. We're here to help and collaborate on making a positive impact.</p>
     
-    <!-- NEW: Profile Carousel -->
+    <!-- NEW: Profile Carousel - Single Centered Profile -->
     <div class="profile-carousel-container">
-        <button class="profile-carousel-btn prev" id="profile-prev-btn">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="profile-carousel-btn next" id="profile-next-btn">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-        
         <div class="profile-carousel-track" id="profile-carousel-track">
-            <!-- Profile 1 -->
+            <!-- Profile 1 - Only Ajay Barala -->
             <div class="profile-carousel-card">
                 <img src="https://i.ibb.co/KpHg86XD/photo-2025-10-25-05-42-50.jpg" alt="Ajay Barala" class="profile-image">
                 <h3>Ajay Barala</h3>
@@ -1103,7 +1152,33 @@ nav ul li a:hover::after { width: 100%; }
 
 <section class="section fade-up" id="contact">
     <h2>Get In Touch</h2>
-    <p>Ready to book a session or have questions about our services? Contact us today and let's discuss how we can help capture your special moments.</p>
+    <p>Interested in volunteering, partnering with us, or learning more about our initiatives? Contact us today and join our mission to create sustainable change.</p>
+    
+    <div class="contact-container">
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-text">
+                <div class="contact-label">Email</div>
+                <div class="contact-value">info@ecoyuva.org</div>
+            </div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+            <div class="contact-text">
+                <div class="contact-label">Phone</div>
+                <div class="contact-value">+91 98765 43210</div>
+            </div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-text">
+                <div class="contact-label">Address</div>
+                <div class="contact-value">Jaipur, Rajasthan</div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <script>
@@ -1160,57 +1235,6 @@ function updateCarouselCaptions() {
     const captions = document.querySelectorAll('.carousel-caption');
     captions.forEach(caption => { caption.classList.remove('visible'); setTimeout(() => { caption.classList.add('visible'); }, 300); });
 }
-
-/* NEW: Profile Carousel */
-const profileTrack = document.getElementById('profile-carousel-track');
-const profileCards = document.querySelectorAll('.profile-carousel-card');
-const profilePrevBtn = document.getElementById('profile-prev-btn');
-const profileNextBtn = document.getElementById('profile-next-btn');
-let profileIndex = 0;
-let profileCardWidth = profileCards[0].offsetWidth + 30;
-
-function calculateVisibleProfileCards() {
-    const containerWidth = profileTrack.parentElement.offsetWidth;
-    profileCardWidth = profileCards[0].offsetWidth + 30;
-    return Math.max(1, Math.floor(containerWidth / profileCardWidth));
-}
-
-function updateProfileCarousel() {
-    const visibleCards = calculateVisibleProfileCards();
-    const maxIndex = profileCards.length - visibleCards;
-    if (profileIndex > maxIndex) profileIndex = 0;
-    if (profileIndex < 0) profileIndex = maxIndex;
-    profileTrack.style.transform = `translateX(-${profileIndex * profileCardWidth}px)`;
-}
-
-function moveProfileCarousel(direction) {
-    const visibleCards = calculateVisibleProfileCards();
-    const maxIndex = profileCards.length - visibleCards;
-    if (direction === 'next') profileIndex = (profileIndex >= maxIndex) ? 0 : profileIndex + 1;
-    if (direction === 'prev') profileIndex = (profileIndex <= 0) ? maxIndex : profileIndex - 1;
-    updateProfileCarousel();
-}
-
-let profileAutoScroll = setInterval(() => moveProfileCarousel('next'), 4000);
-
-profilePrevBtn.addEventListener('click', () => { 
-    clearInterval(profileAutoScroll); 
-    moveProfileCarousel('prev'); 
-    profileAutoScroll = setInterval(() => moveProfileCarousel('next'), 4000); 
-});
-
-profileNextBtn.addEventListener('click', () => { 
-    clearInterval(profileAutoScroll); 
-    moveProfileCarousel('next'); 
-    profileAutoScroll = setInterval(() => moveProfileCarousel('next'), 4000); 
-});
-
-profileTrack.addEventListener('mouseenter', () => clearInterval(profileAutoScroll));
-profileTrack.addEventListener('mouseleave', () => profileAutoScroll = setInterval(() => moveProfileCarousel('next'), 4000));
-
-window.addEventListener('resize', updateProfileCarousel);
-
-updateProfileCarousel();
 
 /* Scroll Animations - Optimized for better performance */
 let ticking = false;
