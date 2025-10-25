@@ -8,143 +8,6 @@
     <link rel="icon" href="https://i.ibb.co/60XRGd6w/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Existing CSS remains the same */
-
-        /* NEW: Floating Scroll-to-Top Button */
-        .floating-scroll-top {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            color: #2ecc71;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-            transition: all 0.3s ease;
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .floating-scroll-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .floating-scroll-top:hover {
-            background-color: #27ae60;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .floating-scroll-top i {
-            font-size: 1.2rem;
-        }
-
-        /* NEW: Copy Feedback Styles */
-        .copy-feedback {
-            position: fixed;
-            bottom: 90px;
-            right: 25px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .copy-feedback.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* NEW: Contact Item Copy Styles */
-        .contact-item {
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .contact-item.copied {
-            background-color: rgba(46, 204, 113, 0.2) !important;
-        }
-
-        .contact-item .copy-indicator {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            width: 18px;
-            height: 18px;
-            background-color: #2ecc71;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.7rem;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.3s ease;
-        }
-
-        .contact-item.copied .copy-indicator {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* Android-specific optimizations */
-        @media (max-width: 768px) and (orientation: portrait) {
-            .floating-scroll-top {
-                bottom: 20px;
-                right: 20px;
-                width: 45px;
-                height: 45px;
-            }
-
-            .floating-scroll-top i {
-                font-size: 1.1rem;
-            }
-
-            .copy-feedback {
-                bottom: 75px;
-                right: 20px;
-                font-size: 0.85rem;
-                padding: 8px 12px;
-            }
-        }
-
-        @media (max-width: 768px) and (orientation: landscape) {
-            .floating-scroll-top {
-                bottom: 15px;
-                right: 15px;
-                width: 40px;
-                height: 40px;
-            }
-
-            .floating-scroll-top i {
-                font-size: 1rem;
-            }
-
-            .copy-feedback {
-                bottom: 65px;
-                right: 15px;
-                font-size: 0.8rem;
-                padding: 6px 10px;
-            }
-        }
-
-        /* The rest of your existing CSS remains the same */
         * {
             margin: 0;
             padding: 0;
@@ -292,11 +155,10 @@
             width: 100%;
         }
 
-        /* Carousel - Android optimized */
+        /* Carousel */
         .carousel-container {
             width: 100%;
             height: 100vh;
-            /* Keep full height for desktop */
             overflow: hidden;
             position: relative;
             margin-top: 0;
@@ -1040,27 +902,246 @@
             line-height: 1.4;
         }
 
+        /* NEW: Roadmap Section Styles - Simplified */
+        .roadmap-section {
+            background-color: #f8f9fa;
+            padding: 80px 5% 50px 5%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .roadmap-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #2ecc71;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item.left {
+            justify-content: flex-start;
+        }
+
+        .timeline-item.right {
+            justify-content: flex-end;
+        }
+
+        .timeline-content {
+            position: relative;
+            width: 45%;
+            cursor: pointer;
+        }
+
+        .timeline-content.left {
+            margin-right: auto;
+        }
+
+        .timeline-content.right {
+            margin-left: auto;
+        }
+
+        .timeline-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border-left: 3px solid #2ecc71;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .timeline-desc ul {
+            padding-left: 15px;
+            margin-top: 8px;
+        }
+
+        .timeline-desc li {
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .timeline-desc li::before {
+            content: '→';
+            position: absolute;
+            left: -12px;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .status-active {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .status-upcoming {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .status-completed {
+            background: #4CAF50;
+            color: white;
+        }
+
+        /* Timeline marker */
+        .timeline-marker {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #2ecc71;
+            border-radius: 50%;
+            top: 15px;
+            z-index: 10;
+        }
+
+        .timeline-content.left .timeline-marker {
+            right: -26px;
+        }
+
+        .timeline-content.right .timeline-marker {
+            left: -26px;
+        }
+
+        /* Timeline date - Simplified */
+        .timeline-date {
+            position: absolute;
+            top: 10px;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .timeline-content.left .timeline-date {
+            right: -120px;
+        }
+
+        .timeline-content.right .timeline-date {
+            left: -120px;
+        }
+
+        /* Partners section */
+        .partners {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px 20px;
+            background: #f0f2f5;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .partners h2 {
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .partner-logo {
+            background: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: #2ecc71;
+        }
+
         /* Android-specific optimizations */
         @media (max-width: 768px) and (orientation: portrait) {
-
-            /* Carousel height for Android portrait */
             .carousel-container {
                 height: 60vh !important;
             }
 
-            /* Reduce section padding for Android */
             .section {
                 padding: 60px 5% 30px 5% !important;
                 min-height: auto !important;
             }
 
-            /* Ensure images start after horizontal bar */
             .section:first-of-type {
                 margin-top: 0 !important;
                 padding-top: 80px !important;
             }
 
-            /* Equal height for vision section cards on Android */
             .mobile-layout .row-two .card,
             .mobile-layout .row-last .card {
                 height: 200px !important;
@@ -1072,7 +1153,6 @@
                 min-height: 220px !important;
             }
 
-            /* Reduce spacing between elements */
             .section h2 {
                 margin-bottom: 0.8rem !important;
             }
@@ -1081,28 +1161,23 @@
                 margin-bottom: 1rem !important;
             }
 
-            /* Mission container adjustments */
             .mission-container {
                 padding: 25px 15px !important;
                 margin: 15px auto !important;
             }
 
-            /* Reduce gaps in content-with-image */
             .content-with-image {
                 gap: 25px !important;
             }
 
-            /* Vision section adjustments */
             .vision-heading {
                 margin-bottom: 20px !important;
             }
 
-            /* Profile carousel adjustments */
             .profile-carousel-container {
                 margin: 20px auto !important;
             }
 
-            /* Reduce font sizes slightly for better mobile readability */
             .section h2 {
                 font-size: 2rem !important;
             }
@@ -1119,7 +1194,6 @@
                 font-size: 1rem !important;
             }
 
-            /* Donation modal adjustments for Android */
             .donation-content {
                 padding: 20px 15px;
                 max-height: 85vh;
@@ -1166,27 +1240,72 @@
             .donation-note {
                 font-size: 0.85rem;
             }
+
+            /* Roadmap mobile optimizations */
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                justify-content: flex-start !important;
+            }
+
+            .timeline-content {
+                width: calc(100% - 50px);
+                margin-left: 50px !important;
+                margin-right: 0 !important;
+            }
+
+            .timeline-card {
+                padding: 12px;
+            }
+
+            .timeline-title {
+                font-size: 1rem;
+            }
+
+            .timeline-desc {
+                font-size: 0.85rem;
+            }
+
+            .timeline-marker {
+                left: -26px !important;
+                right: auto !important;
+            }
+
+            .timeline-date {
+                position: relative;
+                top: 0;
+                left: 0 !important;
+                right: 0 !important;
+                margin-bottom: 5px;
+                font-size: 0.75rem;
+            }
+
+            .partner-logos {
+                gap: 10px;
+            }
+
+            .partner-logo {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
         }
 
         @media (max-width: 768px) and (orientation: landscape) {
-
-            /* Carousel height for Android landscape */
             .carousel-container {
                 height: 80vh !important;
             }
 
-            /* Reduce section padding for Android landscape */
             .section {
                 padding: 70px 5% 40px 5% !important;
             }
 
-            /* Ensure images start after horizontal bar in landscape */
             .section:first-of-type {
                 margin-top: 0 !important;
                 padding-top: 80px !important;
             }
 
-            /* Equal height for vision section cards on Android landscape */
             .mobile-layout .row-two .card,
             .mobile-layout .row-last .card {
                 height: 180px !important;
@@ -1198,7 +1317,6 @@
                 min-height: 200px !important;
             }
 
-            /* Donation modal adjustments for Android landscape */
             .donation-content {
                 max-height: 85vh;
                 padding: 20px;
@@ -1472,6 +1590,7 @@
                     <li><a href="#about">ABOUT</a></li>
                     <li><a href="#services">SERVICES</a></li>
                     <li><a href="#vision">VISION</a></li>
+                    <li><a href="#roadmap">ROADMAP</a></li>
                     <li><a href="#connect">CONTACT US</a></li>
                 </ul>
             </nav>
@@ -1485,18 +1604,9 @@
             <li><a href="#about">ABOUT</a></li>
             <li><a href="#services">SERVICES</a></li>
             <li><a href="#vision">VISION</a></li>
+            <li><a href="#roadmap">ROADMAP</a></li>
             <li><a href="#connect">CONTACT US</a></li>
         </ul>
-    </div>
-
-    <!-- NEW: Floating Scroll-to-Top Button -->
-    <div class="floating-scroll-top" id="scrollTopBtn">
-        <i class="fas fa-angle-up"></i>
-    </div>
-
-    <!-- NEW: Copy Feedback Message -->
-    <div class="copy-feedback" id="copyFeedback">
-        Copied to clipboard!
     </div>
 
     <!-- Donation Modal -->
@@ -1520,12 +1630,6 @@
                     <span class="donation-value" id="accountNumber">8529388024</span>
                     <button class="copy-btn" data-copy="accountNumber">Copy</button>
                 </div>
-
-                <!-- <div class="donation-item">
-                <span class="donation-label">IFSC Code:</span>
-                <span class="donation-value" id="ifscCode">KKBK0003559</span>
-                <button class="copy-btn" data-copy="ifscCode">Copy</button>
-            </div> -->
 
                 <div class="donation-item">
                     <span class="donation-label">Bank Name:</span>
@@ -1656,6 +1760,118 @@
         </div>
     </section>
 
+    <!-- NEW: Roadmap Section - Simplified -->
+    <section class="section roadmap-section fade-up" id="roadmap">
+        <h2>Our Journey</h2>
+        <p>Follow our roadmap to see how we're progressing towards our goals and making an impact.</p>
+
+        <div class="roadmap-container">
+            <div class="timeline">
+                <!-- Sarpanch Samwaad -->
+                <div class="timeline-item left">
+                    <div class="timeline-content left">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-date">15:03:2024</div>
+                        <div class="timeline-card">
+                            <h2 class="timeline-title">Sarpanch Samwaad
+                                <span class="status status-active">Active</span>
+                            </h2>
+                            <div class="timeline-desc">
+                                <p><strong>TRANSFORMING INDIAN VILLAGES INTO QUALITY VILLAGES</strong></p>
+                                <p>Digital platform connecting sarpanches across India...</p>
+                                <ul>
+                                    <li>Launched by Quality Council of India (QCI)</li>
+                                    <li>A digital platform & mobile app connecting 2.5 lakh sarpanches</li>
+                                    <li>Provides scheme updates, expert guidance, & e-learning resources</li>
+                                    <li>Encourages dialogue, peer learning & community-driven governance</li>
+                                    <li>Implementation in Rajasthan, Haryana & Uttrakhand</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile App Training -->
+                <div class="timeline-item right">
+                    <div class="timeline-content right">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-date">22:05:2024</div>
+                        <div class="timeline-card">
+                            <h2 class="timeline-title">MOBILE APP TRAINING FOR SARPANCHS
+                                <span class="status status-active">Active</span>
+                            </h2>
+                            <div class="timeline-desc">
+                                <p>Training programs to help sarpanches effectively use the Sarpanch Samwaad app...</p>
+                                <ul>
+                                    <li>Encouraging sarpanches to download & regularly use the app</li>
+                                    <li>Awareness & orientation sessions at district and block levels</li>
+                                    <li>Familiarising users with features & benefits of the app</li>
+                                    <li>Monitoring adoption & engagement for sustained usage</li>
+                                    <li>Collecting feedback from the field to improve the platform</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FPO Collaboration -->
+                <div class="timeline-item left">
+                    <div class="timeline-content left">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-date">10:07:2024</div>
+                        <div class="timeline-card">
+                            <h2 class="timeline-title">FPO Collaboration in Rajasthan
+                                <span class="status status-active">Active</span>
+                            </h2>
+                            <div class="timeline-desc">
+                                <p>Working with Farmer Producer Organizations to enhance agricultural practices...</p>
+                                <ul>
+                                    <li>EcoYuva working together with Farmer Producer Organisations in Rajasthan</li>
+                                    <li>Providing skill training to farmers for improved practices and livelihoods</li>
+                                    <li>Supporting FPO coordinators and heads with leadership development</li>
+                                    <li>Delivering on-ground training programs to strengthen FPO operations</li>
+                                    <li>Building sustainable farmer networks through knowledge sharing</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- About EcoYuva -->
+                <div class="timeline-item right">
+                    <div class="timeline-content right">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-date">05:01:2025</div>
+                        <div class="timeline-card">
+                            <h2 class="timeline-title">About Ecoyuva Foundation
+                                <span class="status status-completed">Ongoing</span>
+                            </h2>
+                            <div class="timeline-desc">
+                                <p>Focused on Agriculture, Sports and Environment for youth empowerment...</p>
+                                <ul>
+                                    <li>Focused on Agriculture, Sports and Environment for youth empowerment</li>
+                                    <li>Encourages sports and fitness</li>
+                                    <li>Works with farmers and rural communities to promote sustainable agriculture</li>
+                                    <li>Runs environment awareness and conservation initiatives at grassroots level</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="partners">
+            <h2>Our Partners & Collaborations</h2>
+            <div class="partner-logos">
+                <div class="partner-logo">Quality Council of India</div>
+                <div class="partner-logo">State Governments</div>
+                <div class="partner-logo">Farmer Producer Organizations</div>
+                <div class="partner-logo">Local Communities</div>
+            </div>
+        </div>
+    </section>
+
     <!-- NEW: Vision Section -->
     <section class="section fade-up" id="vision">
         <div class="vision-heading">
@@ -1776,7 +1992,7 @@
         <h2>Connect With Us</h2>
         <p>Meet our team and get in touch with us. We're here to help and collaborate on making a positive impact.</p>
 
-        <!-- NEW: Profile Carousel - Single Centered Profile -->
+        <!-- Profile Carousel - Single Centered Profile -->
         <div class="profile-carousel-container">
             <div class="profile-carousel-track" id="profile-carousel-track">
                 <!-- Profile 1 - Only Ajay Barala -->
@@ -1808,7 +2024,6 @@
                     <div class="contact-label">Email</div>
                     <div class="contact-value">ecoyuvafoundation.org</div>
                 </div>
-                <div class="copy-indicator"><i class="fas fa-check"></i></div>
             </div>
 
             <div class="contact-item" data-copy="+91 94625 30220">
@@ -1817,7 +2032,6 @@
                     <div class="contact-label">Phone</div>
                     <div class="contact-value">+91 94625 30220</div>
                 </div>
-                <div class="copy-indicator"><i class="fas fa-check"></i></div>
             </div>
 
             <div class="contact-item" data-copy="Jaipur, Rajasthan">
@@ -1826,7 +2040,6 @@
                     <div class="contact-label">Address</div>
                     <div class="contact-value">Jaipur, Rajasthan</div>
                 </div>
-                <div class="copy-indicator"><i class="fas fa-check"></i></div>
             </div>
         </div>
     </section>
@@ -1915,7 +2128,7 @@
         function handleScrollAnimation() {
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    const fadeElements = document.querySelectorAll('.fade-up, .section p, .image-container, .card');
+                    const fadeElements = document.querySelectorAll('.fade-up, .section p, .image-container, .card, .timeline-item');
                     fadeElements.forEach((element, index) => {
                         const elementTop = element.getBoundingClientRect().top;
                         const elementVisible = window.innerHeight * 0.8;
@@ -1935,21 +2148,15 @@
 
         // Use Intersection Observer for better performance
         if ('IntersectionObserver' in window) {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     }
                 });
-            }, observerOptions);
+            }, { threshold: 0.1 });
 
-            document.querySelectorAll('.fade-up, .section p, .image-container, .card').forEach(el => {
+            document.querySelectorAll('.fade-up, .section p, .image-container, .card, .timeline-item').forEach(el => {
                 observer.observe(el);
             });
         } else {
@@ -2017,56 +2224,6 @@
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.style.backgroundColor = '#2ecc71';
-                }, 2000);
-            });
-        });
-
-        /* NEW: Floating Scroll-to-Top Button Functionality */
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-
-        // Show/hide scroll-to-top button based on scroll position
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        });
-
-        // Scroll to top when button is clicked
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        /* NEW: Contact Item Copy Functionality */
-        const contactItems = document.querySelectorAll('#contact .contact-item');
-        const copyFeedback = document.getElementById('copyFeedback');
-
-        contactItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const textToCopy = item.getAttribute('data-copy');
-
-                // Create a temporary textarea element to copy text
-                const tempTextArea = document.createElement('textarea');
-                tempTextArea.value = textToCopy;
-                document.body.appendChild(tempTextArea);
-                tempTextArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempTextArea);
-
-                // Visual feedback
-                item.classList.add('copied');
-
-                // Show copy feedback message
-                copyFeedback.classList.add('show');
-
-                // Reset after 2 seconds
-                setTimeout(() => {
-                    item.classList.remove('copied');
-                    copyFeedback.classList.remove('show');
                 }, 2000);
             });
         });
