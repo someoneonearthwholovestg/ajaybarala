@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoYuva Foundation</title>
+<link rel="icon" href="https://i.ibb.co/60XRGd6w/logo.png" type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #f8f9fa; overflow-x: hidden; }
+
+/* Header */
+header {
+    background: rgba(225,225,225,.5); 
+    backdrop-filter: blur(10px);
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.header-content { display: flex; justify-content: space-between; align-items: center; padding: 12px 5%; max-width: 1400px; margin: 0 auto; }
+.logo-icon { width: 160px; height: 50px; object-fit: contain; transition: transform 0.3s; }
+.logo-icon:hover { transform: scale(1.05); }
+
+nav ul { display: flex; list-style: none; gap: 28px; }
+nav ul li a { text-decoration: none; color: #333; font-weight: 500; font-size: 0.85rem; letter-spacing: 0.5px; padding: 5px 0; text-transform: uppercase; position: relative; transition: color 0.3s; }
+nav ul li a:hover { color: #e74c3c; }
+nav ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #e74c3c; transition: width 0.3s; }
+nav ul li a:hover::after { width: 100%; }
+
+.header-btn { background-color: #e74c3c; color: white; border: none; padding: 10px 24px; border-radius: 30px; font-weight: 600; cursor: pointer; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(231,76,60,0.3); letter-spacing: 0.5px; transition: all 0.3s ease; }
+.header-btn:hover { background-color: #c0392b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(231,76,60,0.4); }
+
+/* Mobile nav */
+.mobile-nav {
+    display: none;
+}
+.mobile-nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.mobile-nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    position: relative;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+.mobile-nav ul li a:hover {
+    color: #e74c3c;
+}
+.mobile-nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #e74c3c;
+    transition: width 0.3s;
+}
+.mobile-nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Carousel - Android optimized */
+.carousel-container { 
+    width: 100%; 
+    height: 100vh; /* Keep full height for desktop */
+    overflow: hidden; 
+    position: relative; 
+    margin-top: 0; 
+}
+.carousel-track { display: flex; height: 100%; transition: transform 0.8s ease-in-out; }
+.carousel-slide { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-shrink: 0; position: relative; }
+.carousel-image { width: 100%; height: 100%; object-fit: cover; object-position: middle; }
+.carousel-caption { position: absolute; bottom: 20%; left: 10%; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); max-width: 600px; text-align: left; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+
+.carousel-caption.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.carousel-indicators { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+.indicator { width: 12px; height: 12px; border-radius: 50%; background-color: rgba(255,255,255,0.5); cursor: pointer; transition: background-color 0.3s; }
+.indicator.active { background-color: white; }
+
+.carousel-nav { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0,0,0,0.3); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background-color 0.3s; z-index: 10; }
+.carousel-nav:hover { background-color: rgba(0,0,0,0.6); }
+.carousel-prev { left: 20px; }
+.carousel-next { right: 20px; }
+
+/* Sections */
+.section { 
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+    padding: 80px 5% 50px 5%; 
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.section:nth-child(even) { background-color: #f0f2f5; }
+
+.section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+/* Paragraphs */
+.section p {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 750px;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.section p.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade-up animation for other elements */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Mission Section Styles */
+.mission-container {
+    max-width: 900px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    padding: 50px;
+    text-align: left;
+    margin: 20px auto;
+}
+
+.mission-heading {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.mission-text {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.mission-highlight {
+    font-weight: 600;
+    color: #111;
+}
+
+.read-more-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.6s ease;
+}
+
+.read-more-content.expanded {
+    max-height: 1000px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.read-more-link {
+    color: #333;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 15px;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid #333;
+    padding-bottom: 2px;
+}
+
+.read-more-link:hover {
+    color: #000;
+    border-bottom-color: #000;
+}
+
+.additional-points {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.additional-points li {
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.additional-points li::before {
+    content: '•';
+    color: #333;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* New styles for image sections */
+.content-with-image {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 50px;
+}
+
+.content-with-image.reverse {
+    flex-direction: row-reverse;
+}
+
+.image-container {
+    flex: 1;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.image-container.right {
+    transform: translateX(50px);
+}
+
+.image-container.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.image-container img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease;
+}
+
+.image-container img:hover {
+    transform: scale(1.02);
+}
+
+.text-container {
+    flex: 1;
+}
+
+/* NEW: Vision Section Styles */
+.vision-heading {
+    text-align: center;
+    margin-bottom: 30px;
+    max-width: 900px;
+    margin-inline: auto;
+}
+
+.vision-heading h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #2c3e50;
+}
+
+.vision-heading p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+.gallery-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.card:hover img {
+    transform: scale(1.03);
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 14px;
+    transition: all 0.3s ease;
+}
+
+.overlay i {
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.overlay h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    transition: transform 0.3s ease;
+}
+
+.overlay p {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    color: #fff;
+    margin: 0;
+}
+
+/* Hover effect for desktop */
+@media (min-width: 901px) {
+    .card:hover .overlay h3 {
+        transform: translateY(-4px);
+    }
+    .card:hover .overlay p {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Hide description by default on desktop */
+    .overlay p {
+        display: none;
+    }
+    .card:hover .overlay p {
+        display: block;
+    }
+}
+
+/* Desktop Layout: 2-1-2 columns, compact size */
+.desktop-layout {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+}
+
+.middle-column {
+    flex: 1;
+    display: flex;
+}
+
+.middle-column .card {
+    height: 420px;
+}
+
+.side-column .card {
+    height: 200px;
+}
+
+/* Mobile Layout: 2-1-2 vertical pattern */
+.mobile-layout {
+    display: none;
+}
+
+/* NEW: Profile Carousel Styles */
+.profile-carousel-container {
+    width: 90%;
+    max-width: 1400px;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 0;
+    margin: 30px auto;
+}
+
+.profile-carousel-track {
+    display: flex;
+    transition: transform 1s ease-in-out;
+}
+
+.profile-carousel-card {
+    flex: 0 0 auto;
+    width: 280px;
+    height: 380px;
+    background-color: white;
+    border-radius: 15px;
+    margin: 0 15px;
+    padding: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    color: #333;
+}
+
+.profile-image {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 4px solid #e74c3c;
+    padding: 3px;
+    background-color: white;
+}
+
+.profile-carousel-card h3 {
+    margin: 5px 0 3px 0;
+    font-size: 1.4rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.profile-carousel-card .position {
+    margin: 0 0 10px 0;
+    color: #7f8c8d;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.profile-contact {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.profile-contact a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+    color: #555;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+.profile-contact a i {
+    margin-right: 6px;
+    color: #e74c3c;
+}
+
+.profile-contact a:hover {
+    color: #e74c3c;
+}
+
+.profile-social-icons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-social-icons a {
+    color: #7f8c8d;
+    margin: 0 10px;
+    font-size: 1.3rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.profile-social-icons a:hover {
+    color: #e74c3c;
+    transform: translateY(-3px);
+}
+
+.profile-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    color: #e74c3c;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+
+.profile-carousel-btn:hover {
+    background-color: #e74c3c;
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.profile-carousel-btn.prev { left: 10px; }
+.profile-carousel-btn.next { right: 10px; }
+
+/* Contact Section - Optimized for faster rendering */
+#contact {
+    transition: all 0.3s ease;
+}
+
+/* Android-specific optimizations */
+@media (max-width: 768px) and (orientation: portrait) {
+    /* Carousel height for Android portrait */
+    .carousel-container {
+        height: 60vh !important;
+    }
+    
+    /* Reduce section padding for Android */
+    .section {
+        padding: 60px 5% 30px 5% !important;
+        min-height: auto !important;
+    }
+    
+    /* Ensure images start after horizontal bar */
+    .section:first-of-type {
+        margin-top: 0 !important;
+        padding-top: 80px !important;
+    }
+    
+    /* Equal height for vision section cards on Android */
+    .mobile-layout .row-two .card,
+    .mobile-layout .row-last .card {
+        height: 200px !important;
+        min-height: 200px !important;
+    }
+    
+    .mobile-layout .row-full .card {
+        height: 220px !important;
+        min-height: 220px !important;
+    }
+    
+    /* Reduce spacing between elements */
+    .section h2 {
+        margin-bottom: 0.8rem !important;
+    }
+    
+    .section p {
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Mission container adjustments */
+    .mission-container {
+        padding: 25px 15px !important;
+        margin: 15px auto !important;
+    }
+    
+    /* Reduce gaps in content-with-image */
+    .content-with-image {
+        gap: 25px !important;
+    }
+    
+    /* Vision section adjustments */
+    .vision-heading {
+        margin-bottom: 20px !important;
+    }
+    
+    /* Profile carousel adjustments */
+    .profile-carousel-container {
+        margin: 20px auto !important;
+    }
+    
+    /* Reduce font sizes slightly for better mobile readability */
+    .section h2 {
+        font-size: 2rem !important;
+    }
+    
+    .section p {
+        font-size: 1rem !important;
+    }
+    
+    .mission-heading {
+        font-size: 1.5rem !important;
+    }
+    
+    .mission-text {
+        font-size: 1rem !important;
+    }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+    /* Carousel height for Android landscape */
+    .carousel-container {
+        height: 80vh !important;
+    }
+    
+    /* Reduce section padding for Android landscape */
+    .section {
+        padding: 70px 5% 40px 5% !important;
+    }
+    
+    /* Ensure images start after horizontal bar in landscape */
+    .section:first-of-type {
+        margin-top: 0 !important;
+        padding-top: 80px !important;
+    }
+    
+    /* Equal height for vision section cards on Android landscape */
+    .mobile-layout .row-two .card,
+    .mobile-layout .row-last .card {
+        height: 180px !important;
+        min-height: 180px !important;
+    }
+    
+    .mobile-layout .row-full .card {
+        height: 200px !important;
+        min-height: 200px !important;
+    }
+}
+
+/* General mobile responsive styles */
+@media (max-width: 900px) {
+    .desktop-layout {
+        display: none;
+    }
+    
+    .mobile-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    .row-two, .row-last {
+        display: flex;
+        gap: 8px;
+    }
+    
+    .row-two .card, .row-last .card {
+        flex: 1;
+    }
+    
+    .row-full .card {
+        width: 100%;
+    }
+    
+    .overlay {
+        padding: 8px;
+    }
+    
+    .overlay i {
+        font-size: 1rem;
+        margin-bottom: 3px;
+    }
+    
+    .overlay h3 {
+        font-size: 0.85rem;
+    }
+    
+    .overlay p {
+        font-size: 0.7rem;
+        opacity: 1;
+        transform: none;
+        display: block;
+    }
+}
+
+@media (max-width: 768px) { 
+    nav { display: none; } 
+    .mobile-nav { 
+        display: flex; 
+        background: rgba(225,225,225,.5);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(225,225,225,0.5);
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 8px 0;
+        position: fixed;
+        top: 70px;
+        width: 100%;
+        z-index: 999;
+        justify-content: center;
+    }
+    .section h2 { font-size: 2rem; }
+    .section p { font-size: 1rem; }
+    .mission-container {
+        padding: 30px 20px;
+    }
+    
+    .mission-heading {
+        font-size: 1.6rem;
+    }
+    
+    .content-with-image {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .content-with-image.reverse {
+        flex-direction: column;
+    }
+    
+    .image-container {
+        width: 100%;
+    }
+    
+    .vision-heading h2 {
+        font-size: 2rem;
+    }
+    
+    .vision-heading p {
+        font-size: 1rem;
+    }
+    
+    /* Profile carousel responsive */
+    .profile-carousel-card { 
+        width: 300px; 
+        height: 360px; 
+    }
+    .profile-image { 
+        width: 110px; 
+        height: 110px; 
+    }
+    .profile-carousel-btn { 
+        width: 45px; 
+        height: 45px; 
+        font-size: 1.2rem; 
+    }
+}
+@media (max-width: 480px) { 
+    .logo-icon { width: 120px; height: 40px; } 
+    .section h2 { font-size: 1.8rem; }
+    .section p { font-size: 0.9rem; }
+    
+    .vision-heading h2 {
+        font-size: 1.8rem;
+    }
+    
+    .vision-heading p {
+        font-size: 0.9rem;
+    }
+    
+    /* Profile carousel responsive */
+    .profile-carousel-card { 
+        width: 260px; 
+        height: 300px; 
+        margin: 0 8px; 
+        padding: 20px; 
+    }
+    .profile-image { 
+        width: 90px; 
+        height: 90px; 
+    }
+    .profile-carousel-btn { 
+        width: 36px; 
+        height: 36px; 
+        font-size: 1rem; 
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo-container">
+            <img src="https://i.ibb.co/B5WSvSnr/image-2025-10-22-00-35-32-removebg-preview.png" alt="EcoYuva Logo" class="logo-icon">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#services">SERVICES</a></li>
+                <li><a href="#vision">VISION</a></li>
+                <li><a href="#connect">CONTACT US</a></li>
+            </ul>
+        </nav>
+        <button class="header-btn">DONATE</button>
+    </div>
+</header>
+
+<div class="mobile-nav">
+    <ul>
+        <li><a href="#">HOME</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#services">SERVICES</a></li>
+        <li><a href="#vision">VISION</a></li>
+        <li><a href="#connect">CONTACT Us</a></li>
+    </ul>
+</div>
+
+<div class="carousel-container">
+    <div class="carousel-track">
+        <div class="carousel-slide">
+            <img src="https://i.ibb.co/cKqpLXr0/image-2025-10-22-19-04-50.png" class="carousel-image">
+            <div class="carousel-caption fade-up">
+                <h2>Empowering Communities</h2>
+                <p>Professional photography services for all your important events and milestones.</p>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <img src="https://i.ibb.co/q3kvL6gf/image-2025-10-22-19-04-50-1.png" class="carousel-image">
+            <div class="carousel-caption fade-up">
+                <h2>Creative Portrait Sessions</h2>
+                <p>Express your personality with our unique and artistic portrait photography.</p>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <img src="https://i.ibb.co/PvNm6V5s/photo-2025-10-25-03-23-01.jpg" class="carousel-image">
+            <div class="carousel-caption fade-up">
+                <h2>Stunning Landscape Photography</h2>
+                <p>Explore the world through our lens and discover breathtaking landscapes.</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="carousel-nav carousel-prev"><i class="fas fa-chevron-left"></i></button>
+    <button class="carousel-nav carousel-next"><i class="fas fa-chevron-right"></i></button>
+
+    <div class="carousel-indicators">
+        <div class="indicator active"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+    </div>
+</div>
+
+<!-- Sections -->
+<section class="section fade-up" id="about">
+    <h2>Knowing EcoYuva Foundation</h2>
+    <div class="content-with-image">
+        <div class="image-container fade-up">
+            <img src="https://i.ibb.co/rGvhQ6YT/photo-2025-10-25-03-11-39.jpg" alt="EcoYuva team working together">
+        </div>
+        <div class="text-container">
+            <p>
+                The <strong>EcoYuva Foundation</strong>, founded in 2025 by a dedicated group of young social workers, is devoted to uplifting underprivileged children, women, and rural communities. Our comprehensive strategy includes <strong>environment, education, skill-building, health programs, sustainable practices, sports inclusion, fostering social and market awareness, and agritourism</strong>.
+            </p>
+            <p>
+                We actively implement our mission through various initiatives that enhance human well-being. Currently, we operate four key drives — <strong>Sports, Awareness, Education, and Skill drives</strong> — in our operational area of <strong>Jaipur, Rajasthan</strong>. We believe that living in a better environment with access to basic amenities should be a <strong>fundamental right, not a privilege</strong>. Our awareness drive plays a crucial role in sensitizing people to the challenges faced by marginalized communities and the steps needed to improve their circumstances.
+            </p>
+            <p>
+                Our focus is on fostering self-reliance, particularly by giving a platform to underprivileged children through sports and education, empowering women through skill development, menstrual hygiene education, local resource development, and improved access to higher education and technical training. While our primary efforts are concentrated in villages around Jaipur, Rajasthan, we aspire to expand our impact continually.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section fade-up" id="services">
+    <h2>Our Mission</h2>
+    <div class="content-with-image reverse">
+        <div class="text-container">
+            <div class="mission-container">
+                <p class="mission-text">
+                    The EcoYuva Foundation is committed to uplifting underprivileged children, youth, women, and rural communities through a holistic approach that includes:
+                </p>
+                
+                <ul class="additional-points">
+                    <li><span class="mission-highlight">Tailored Education:</span> Delivering education that meets the specific needs of the community.</li>
+                    <li><span class="mission-highlight">Health and Nutrition Awareness:</span> Raising awareness about vital health and nutrition practices.</li>
+                    <li><span class="mission-highlight">Sustainable Practices:</span> Encouraging environmentally friendly and sustainable living.</li>
+                    <li><span class="mission-highlight">Practical Skill Development:</span> Providing market-oriented training to support livelihoods.</li>
+                    <li><span class="mission-highlight">Resource Accessibility:</span> Supplying essential resources to promote self-reliance.</li>
+                    <li><span class="mission-highlight">Community Strengthening:</span> Building resilient communities for a sustainable future.</li>
+                    <li><span class="mission-highlight">Agritourism:</span> Providing farmers with skills to turn their farms into tourism spots and increase income through agriculture.</li>
+                </ul>
+                
+                <div class="read-more-content" id="moreContent">
+                    <p class="mission-text">
+                        In addition, we aim to:
+                    </p>
+                    
+                    <ul class="additional-points">
+                        <li>Employ innovative methodologies and technology to maximize social impact.</li>
+                        <li>Maintain high standards of governance.</li>
+                        <li>Connect corporate goals with social development efforts.</li>
+                        <li>Promote civic engagement by sensitizing youth and citizens to drive change.</li>
+                    </ul>
+                    
+                    <p class="mission-text">
+                        The EcoYuva Foundation seeks to inspire a transformative shift in humanity. Our mission is to equip individuals, communities, and nations with the knowledge, skills, and resources necessary for a sustainable and just world. We are dedicated to:
+                    </p>
+                    
+                    <ul class="additional-points">
+                        <li><span class="mission-highlight">Exemplary Governance:</span> Adhering to the highest governance standards.</li>
+                        <li><span class="mission-highlight">Innovative Solutions:</span> Using advanced knowledge and technology to drive progress.</li>
+                        <li><span class="mission-highlight">Scalable Impact:</span> Establishing ourselves as a leading organization with widespread, scalable influence.</li>
+                    </ul>
+                </div>
+
+                <span class="read-more-link" id="readMoreLink">Read more...</span>
+            </div>
+        </div>
+        <div class="image-container right fade-up">
+            <img src="https://i.ibb.co/ZRMGqxdG/photo-2025-10-25-03-14-05.jpg" alt="EcoYuva mission in action">
+        </div>
+    </div>
+</section>
+
+<!-- NEW: Vision Section -->
+<section class="section fade-up" id="vision">
+    <div class="vision-heading">
+        <h2>OUR VISION</h2>
+        <p>
+            The EcoYuva Foundation seeks to drive humanity's progress by empowering individuals, communities, and nations with the knowledge, skills, and resources for a sustainable, equitable future. We are dedicated to:
+        </p>
+    </div>
+
+    <div class="gallery-container">
+        <!-- Desktop Layout -->
+        <div class="desktop-layout">
+            <div class="column side-column">
+                <div class="card fade-up">
+                    <img src="https://i.ibb.co/ZRMGqxdG/photo-2025-10-25-03-14-05.jpg" alt="Governance">
+                    <div class="overlay">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        <h3>Exemplary Governance</h3>
+                        <p>Maintaining the highest standards of integrity and excellence.</p>
+                    </div>
+                </div>
+                <div class="card fade-up">
+                    <img src="https://i.ibb.co/cKqpLXr0/image-2025-10-22-19-04-50.png" alt="Innovation">
+                    <div class="overlay">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <h3>Innovative Knowledge & Technology</h3>
+                        <p>Harnessing advanced insights and tools for progress.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column middle-column">
+                <div class="card fade-up">
+                    <img src="https://i.ibb.co/q3kvL6gf/image-2025-10-22-19-04-50-1.png" alt="Impact">
+                    <div class="overlay">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <h3>Scalable Impact</h3>
+                        <p>Establishing ourselves as a leading force for sustainable development.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column side-column">
+                <div class="card fade-up">
+                    <img src="https://i.ibb.co/PvNm6V5s/photo-2025-10-25-03-23-01.jpg" alt="Empowerment">
+                    <div class="overlay">
+                        <i class="fa-solid fa-people-group"></i>
+                        <h3>Inclusive Empowerment</h3>
+                        <p>Ensuring equal opportunities for youth and marginalized groups.</p>
+                    </div>
+                </div>
+                <div class="card fade-up">
+                    <img src="https://i.ibb.co/rGvhQ6YT/photo-2025-10-25-03-11-39.jpg" alt="Collaboration">
+                    <div class="overlay">
+                        <i class="fa-solid fa-globe"></i>
+                        <h3>Global Collaboration</h3>
+                        <p>Building partnerships across borders for shared prosperity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Layout -->
+        <div class="mobile-layout">
+            <div class="row-two">
+                <div class="card fade-up">
+                    <img src="https://i.ibb.co/ZRMGqxdG/photo-2025-10-25-03-14-05.jpg" alt="Governance">
+                    <div class="overlay">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        <h3>Exemplary Governance</h3>
+                        <p>Maintaining the highest standards of integrity and excellence.</p>
+                    </div>
+                </div>
+                <div class="card fade-up">
+                    <img src="https://i.ibb.co/cKqpLXr0/image-2025-10-22-19-04-50.png" alt="Innovation">
+                    <div class="overlay">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <h3>Innovative Knowledge & Technology</h3>
+                        <p>Harnessing advanced insights and tools for progress.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-full">
+                <div class="card fade-up">
+                    <img src="https://i.ibb.co/q3kvL6gf/image-2025-10-22-19-04-50-1.png" alt="Impact">
+                    <div class="overlay">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <h3>Scalable Impact</h3>
+                        <p>Establishing ourselves as a leading force for sustainable development.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-last">
+                <div class="card fade-up">
+                    <img src="https://i.ibb.co/PvNm6V5s/photo-2025-10-25-03-23-01.jpg" alt="Empowerment">
+                    <div class="overlay">
+                        <i class="fa-solid fa-people-group"></i>
+                        <h3>Inclusive Empowerment</h3>
+                        <p>Ensuring equal opportunities for youth and marginalized groups.</p>
+                    </div>
+                </div>
+                <div class="card fade-up">
+                    <img src="https://i.ibb.co/rGvhQ6YT/photo-2025-10-25-03-11-39.jpg" alt="Collaboration">
+                    <div class="overlay">
+                        <i class="fa-solid fa-globe"></i>
+                        <h3>Global Collaboration</h3>
+                        <p>Building partnerships across borders for shared prosperity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section fade-up" id="connect">
+    <h2>Connect With Us</h2>
+    <p>Meet our team and get in touch with us. We're here to help and collaborate on making a positive impact.</p>
+    
+    <!-- NEW: Profile Carousel -->
+    <div class="profile-carousel-container">
+        <button class="profile-carousel-btn prev" id="profile-prev-btn">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="profile-carousel-btn next" id="profile-next-btn">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <div class="profile-carousel-track" id="profile-carousel-track">
+            <!-- Profile 1 -->
+            <div class="profile-carousel-card">
+                <img src="https://i.ibb.co/KpHg86XD/photo-2025-10-25-05-42-50.jpg" alt="Rahul Sharma" class="profile-image">
+                <h3>Rahul Sharma</h3>
+                <p class="position">Founder & CEO</p>
+                <div class="profile-contact">
+                    <a href="mailto:rahul@ecoyuva.org"><i class="fas fa-envelope"></i>rahul@ecoyuva.org</a>
+                    <a href="tel:+919876543210"><i class="fas fa-phone"></i>+91 98765 43210</a>
+                </div>
+                <div class="profile-social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <!-- Profile 2 -->
+            <div class="profile-carousel-card">
+                <img src="https://i.ibb.co/KpHg86XD/photo-2025-10-25-05-42-50.jpg" alt="Priya Patel" class="profile-image">
+                <h3>Priya Patel</h3>
+                <p class="position">Program Director</p>
+                <div class="profile-contact">
+                    <a href="mailto:priya@ecoyuva.org"><i class="fas fa-envelope"></i>priya@ecoyuva.org</a>
+                    <a href="tel:+919876543211"><i class="fas fa-phone"></i>+91 98765 43211</a>
+                </div>
+                <div class="profile-social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <!-- Profile 3 -->
+            <div class="profile-carousel-card">
+                <img src="https://i.ibb.co/KpHg86XD/photo-2025-10-25-05-42-50.jpg" alt="Anjali Singh" class="profile-image">
+                <h3>Anjali Singh</h3>
+                <p class="position">Community Outreach</p>
+                <div class="profile-contact">
+                    <a href="mailto:anjali@ecoyuva.org"><i class="fas fa-envelope"></i>anjali@ecoyuva.org</a>
+                    <a href="tel:+919876543212"><i class="fas fa-phone"></i>+91 98765 43212</a>
+                </div>
+                <div class="profile-social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <!-- Profile 4 -->
+            <div class="profile-carousel-card">
+                <img src="https://i.ibb.co/KpHg86XD/photo-2025-10-25-05-42-50.jpg" alt="Vikram Mehta" class="profile-image">
+                <h3>Vikram Mehta</h3>
+                <p class="position">Education Coordinator</p>
+                <div class="profile-contact">
+                    <a href="mailto:vikram@ecoyuva.org"><i class="fas fa-envelope"></i>vikram@ecoyuva.org</a>
+                    <a href="tel:+919876543213"><i class="fas fa-phone"></i>+91 98765 43213</a>
+                </div>
+                <div class="profile-social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <!-- Profile 5 -->
+            <div class="profile-carousel-card">
+                <img src="https://i.ibb.co/KpHg86XD/photo-2025-10-25-05-42-50.jpg" alt="Neha Gupta" class="profile-image">
+                <h3>Neha Gupta</h3>
+                <p class="position">Sustainability Lead</p>
+                <div class="profile-contact">
+                    <a href="mailto:neha@ecoyuva.org"><i class="fas fa-envelope"></i>neha@ecoyuva.org</a>
+                    <a href="tel:+919876543214"><i class="fas fa-phone"></i>+91 98765 43214</a>
+                </div>
+                <div class="profile-social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section fade-up" id="contact">
+    <h2>Get In Touch</h2>
+    <p>Ready to book a session or have questions about our services? Contact us today and let's discuss how we can help capture your special moments.</p>
+</section>
+
+<script>
+/* Main Carousel */
+const track = document.querySelector('.carousel-track');
+const slides = Array.from(track.children);
+const prevBtn = document.querySelector('.carousel-prev');
+const nextBtn = document.querySelector('.carousel-next');
+const indicators = document.querySelectorAll('.indicator');
+
+let currentIndex = 0;
+const slideCount = slides.length;
+
+const firstClone = slides[0].cloneNode(true);
+const lastClone = slides[slides.length - 1].cloneNode(true);
+track.appendChild(firstClone);
+track.insertBefore(lastClone, slides[0]);
+const allSlides = Array.from(track.children);
+track.style.transform = `translateX(-100%)`;
+
+function updateCarousel(animate = true) {
+    track.style.transition = animate ? 'transform 0.8s ease-in-out' : 'none';
+    track.style.transform = `translateX(-${(currentIndex + 1) * 100}%)`;
+    indicators.forEach((ind, i) => ind.classList.toggle('active', i === currentIndex));
+    updateCarouselCaptions();
+}
+
+nextBtn.addEventListener('click', () => {
+    currentIndex++;
+    updateCarousel();
+    if (currentIndex >= slideCount) {
+        setTimeout(() => { currentIndex = 0; updateCarousel(false); }, 800);
+    }
+    resetAutoScroll();
+});
+
+prevBtn.addEventListener('click', () => {
+    currentIndex--;
+    updateCarousel();
+    if (currentIndex < 0) {
+        setTimeout(() => { currentIndex = slideCount - 1; updateCarousel(false); }, 800);
+    }
+    resetAutoScroll();
+});
+
+indicators.forEach((ind, i) => {
+    ind.addEventListener('click', () => { currentIndex = i; updateCarousel(); resetAutoScroll(); });
+});
+
+let autoScroll = setInterval(() => { nextBtn.click(); }, 4000);
+function resetAutoScroll() { clearInterval(autoScroll); autoScroll = setInterval(() => { nextBtn.click(); }, 4000); }
+
+function updateCarouselCaptions() {
+    const captions = document.querySelectorAll('.carousel-caption');
+    captions.forEach(caption => { caption.classList.remove('visible'); setTimeout(() => { caption.classList.add('visible'); }, 300); });
+}
+
+/* NEW: Profile Carousel */
+const profileTrack = document.getElementById('profile-carousel-track');
+const profileCards = document.querySelectorAll('.profile-carousel-card');
+const profilePrevBtn = document.getElementById('profile-prev-btn');
+const profileNextBtn = document.getElementById('profile-next-btn');
+let profileIndex = 0;
+let profileCardWidth = profileCards[0].offsetWidth + 30;
+
+function calculateVisibleProfileCards() {
+    const containerWidth = profileTrack.parentElement.offsetWidth;
+    profileCardWidth = profileCards[0].offsetWidth + 30;
+    return Math.max(1, Math.floor(containerWidth / profileCardWidth));
+}
+
+function updateProfileCarousel() {
+    const visibleCards = calculateVisibleProfileCards();
+    const maxIndex = profileCards.length - visibleCards;
+    if (profileIndex > maxIndex) profileIndex = 0;
+    if (profileIndex < 0) profileIndex = maxIndex;
+    profileTrack.style.transform = `translateX(-${profileIndex * profileCardWidth}px)`;
+}
+
+function moveProfileCarousel(direction) {
+    const visibleCards = calculateVisibleProfileCards();
+    const maxIndex = profileCards.length - visibleCards;
+    if (direction === 'next') profileIndex = (profileIndex >= maxIndex) ? 0 : profileIndex + 1;
+    if (direction === 'prev') profileIndex = (profileIndex <= 0) ? maxIndex : profileIndex - 1;
+    updateProfileCarousel();
+}
+
+let profileAutoScroll = setInterval(() => moveProfileCarousel('next'), 4000);
+
+profilePrevBtn.addEventListener('click', () => { 
+    clearInterval(profileAutoScroll); 
+    moveProfileCarousel('prev'); 
+    profileAutoScroll = setInterval(() => moveProfileCarousel('next'), 4000); 
+});
+
+profileNextBtn.addEventListener('click', () => { 
+    clearInterval(profileAutoScroll); 
+    moveProfileCarousel('next'); 
+    profileAutoScroll = setInterval(() => moveProfileCarousel('next'), 4000); 
+});
+
+profileTrack.addEventListener('mouseenter', () => clearInterval(profileAutoScroll));
+profileTrack.addEventListener('mouseleave', () => profileAutoScroll = setInterval(() => moveProfileCarousel('next'), 4000));
+
+window.addEventListener('resize', updateProfileCarousel);
+
+updateProfileCarousel();
+
+/* Scroll Animations - Optimized for better performance */
+let ticking = false;
+
+function handleScrollAnimation() {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            const fadeElements = document.querySelectorAll('.fade-up, .section p, .image-container, .card');
+            fadeElements.forEach((element, index) => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = window.innerHeight * 0.8;
+                if (elementTop < elementVisible) {
+                    setTimeout(() => { element.classList.add('visible'); }, index * 30);
+                } else {
+                    element.classList.remove('visible');
+                }
+            });
+            ticking = false;
+        });
+        ticking = true;
+    }
+}
+
+// Use Intersection Observer for better performance
+if ('IntersectionObserver' in window) {
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.fade-up, .section p, .image-container, .card').forEach(el => {
+        observer.observe(el);
+    });
+} else {
+    // Fallback for older browsers
+    window.addEventListener('scroll', handleScrollAnimation);
+    window.addEventListener('load', handleScrollAnimation);
+}
+
+// Read More link functionality
+const readMoreLink = document.getElementById('readMoreLink');
+if (readMoreLink) {
+    const moreContent = document.getElementById('moreContent');
+    readMoreLink.addEventListener('click', function() {
+        const isExpanded = moreContent.classList.toggle('expanded');
+        readMoreLink.textContent = isExpanded ? 'Read less...' : 'Read more...';
+    });
+}
+
+updateCarouselCaptions();
+</script>
+
+</body>
+</html>
