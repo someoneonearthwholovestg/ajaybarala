@@ -8,6 +8,143 @@
     <link rel="icon" href="https://i.ibb.co/60XRGd6w/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Existing CSS remains the same */
+
+        /* NEW: Floating Scroll-to-Top Button */
+        .floating-scroll-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: #2ecc71;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .floating-scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .floating-scroll-top:hover {
+            background-color: #27ae60;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .floating-scroll-top i {
+            font-size: 1.2rem;
+        }
+
+        /* NEW: Copy Feedback Styles */
+        .copy-feedback {
+            position: fixed;
+            bottom: 90px;
+            right: 25px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .copy-feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* NEW: Contact Item Copy Styles */
+        .contact-item {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item.copied {
+            background-color: rgba(46, 204, 113, 0.2) !important;
+        }
+
+        .contact-item .copy-indicator {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 18px;
+            height: 18px;
+            background-color: #2ecc71;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item.copied .copy-indicator {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Android-specific optimizations */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .floating-scroll-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .floating-scroll-top i {
+                font-size: 1.1rem;
+            }
+
+            .copy-feedback {
+                bottom: 75px;
+                right: 20px;
+                font-size: 0.85rem;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 768px) and (orientation: landscape) {
+            .floating-scroll-top {
+                bottom: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .floating-scroll-top i {
+                font-size: 1rem;
+            }
+
+            .copy-feedback {
+                bottom: 65px;
+                right: 15px;
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+        }
+
+        /* The rest of your existing CSS remains the same */
         * {
             margin: 0;
             padding: 0;
@@ -1352,6 +1489,16 @@
         </ul>
     </div>
 
+    <!-- NEW: Floating Scroll-to-Top Button -->
+    <div class="floating-scroll-top" id="scrollTopBtn">
+        <i class="fas fa-angle-up"></i>
+    </div>
+
+    <!-- NEW: Copy Feedback Message -->
+    <div class="copy-feedback" id="copyFeedback">
+        Copied to clipboard!
+    </div>
+
     <!-- Donation Modal -->
     <div class="donation-modal" id="donationModal">
         <div class="donation-content">
@@ -1655,28 +1802,31 @@
         <p>Interested in volunteering, partnering with us, or learning more about our initiatives? Contact us today and join our mission to create sustainable change.</p>
 
         <div class="contact-container">
-            <div class="contact-item">
+            <div class="contact-item" data-copy="ecoyuvafoundation.org">
                 <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                 <div class="contact-text">
                     <div class="contact-label">Email</div>
                     <div class="contact-value">ecoyuvafoundation.org</div>
                 </div>
+                <div class="copy-indicator"><i class="fas fa-check"></i></div>
             </div>
 
-            <div class="contact-item">
+            <div class="contact-item" data-copy="+91 94625 30220">
                 <div class="contact-icon"><i class="fas fa-phone"></i></div>
                 <div class="contact-text">
                     <div class="contact-label">Phone</div>
                     <div class="contact-value">+91 94625 30220</div>
                 </div>
+                <div class="copy-indicator"><i class="fas fa-check"></i></div>
             </div>
 
-            <div class="contact-item">
+            <div class="contact-item" data-copy="Jaipur, Rajasthan">
                 <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                 <div class="contact-text">
                     <div class="contact-label">Address</div>
                     <div class="contact-value">Jaipur, Rajasthan</div>
                 </div>
+                <div class="copy-indicator"><i class="fas fa-check"></i></div>
             </div>
         </div>
     </section>
@@ -1867,6 +2017,56 @@
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.style.backgroundColor = '#2ecc71';
+                }, 2000);
+            });
+        });
+
+        /* NEW: Floating Scroll-to-Top Button Functionality */
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        // Show/hide scroll-to-top button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Scroll to top when button is clicked
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        /* NEW: Contact Item Copy Functionality */
+        const contactItems = document.querySelectorAll('#contact .contact-item');
+        const copyFeedback = document.getElementById('copyFeedback');
+
+        contactItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const textToCopy = item.getAttribute('data-copy');
+
+                // Create a temporary textarea element to copy text
+                const tempTextArea = document.createElement('textarea');
+                tempTextArea.value = textToCopy;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempTextArea);
+
+                // Visual feedback
+                item.classList.add('copied');
+
+                // Show copy feedback message
+                copyFeedback.classList.add('show');
+
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    item.classList.remove('copied');
+                    copyFeedback.classList.remove('show');
                 }, 2000);
             });
         });
