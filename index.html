@@ -1716,6 +1716,54 @@
                 font-size: 1rem;
             }
         }
+        
+        .copyright-line {
+            position: fixed;
+            bottom: -60px;
+            left: 0;
+            width: 100%;
+            background: rgba(248, 249, 250, 0.95);
+            padding: 15px 10px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+            z-index: 998;
+            transition: bottom 0.6s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .copyright-line.visible {
+            bottom: 0;
+        }
+        
+        .copyright-text {
+            color: #555;
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        /* Mobile: Attached to content end */
+        @media (max-width: 768px) {
+            .copyright-line {
+                position: relative;
+                bottom: 0;
+                margin-top: 0;
+                background: #f8f9fa;
+                border-top: 1px solid #e9ecef;
+                backdrop-filter: none;
+                padding: 20px 10px;
+            }
+            
+            .copyright-line.visible {
+                bottom: 0;
+            }
+            
+            /* Add some spacing after last section for mobile */
+            #contact {
+                padding-bottom: 40px !important;
+            }
+        }
     </style>
 </head>
 
@@ -2194,6 +2242,10 @@
         <i class="fas fa-chevron-up"></i>
     </button>
 
+    <div class="copyright-line" id="copyrightLine">
+        <p class="copyright-text">एक कदम सशक्त भारत की तरफ | Copyright © 2025 EcoYuva Foundation</p>
+    </div>
+
     <script>
         /* Main Carousel */
         const track = document.querySelector('.carousel-track');
@@ -2424,6 +2476,47 @@
         });
 
         updateCarouselCaptions();
+
+        /* NEW: Animated Copyright Line on Scroll End */
+        const copyrightLine = document.getElementById('copyrightLine');
+        const isMobile = window.innerWidth <= 768;
+        
+        function checkScrollEnd() {
+            if (isMobile) {
+                // For mobile: always show as it's attached to content
+                copyrightLine.classList.add('visible');
+                return;
+            }
+            
+            // For desktop: show only at bottom
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = window.innerHeight;
+            
+            // Check if user is near the bottom (within 100px)
+            const isAtBottom = scrollHeight - scrollTop - clientHeight < 100;
+            
+            if (isAtBottom) {
+                copyrightLine.classList.add('visible');
+            } else {
+                copyrightLine.classList.remove('visible');
+            }
+        }
+        
+        // Throttle the scroll event for better performance
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (!scrollTimeout) {
+                scrollTimeout = setTimeout(() => {
+                    checkScrollEnd();
+                    scrollTimeout = null;
+                }, 100);
+            }
+        });
+        
+        // Also check on page load and resize
+        window.addEventListener('load', checkScrollEnd);
+        window.addEventListener('resize', checkScrollEnd);
     </script>
 
 </body>
