@@ -1004,6 +1004,13 @@
             font-size: 0.9rem;
             color: #666;
             line-height: 1.5;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .timeline-desc.expanded {
+            max-height: 500px;
         }
 
         .timeline-desc ul {
@@ -1015,7 +1022,6 @@
         .timeline-desc li {
             margin-bottom: 5px;
             position: relative;
-            padding-left: 15px;
         }
 
         .timeline-desc li::before {
@@ -1576,6 +1582,8 @@
                 font-size: 0.7rem;
             }
         }
+
+        /* NEW: Floating Go Up Button */
         .go-up-btn {
             position: fixed;
             bottom: 25px;
@@ -1657,7 +1665,7 @@
             <button class="header-btn" id="donateBtn">DONATE</button>
         </div>
     </header>
-Ï
+
     <div class="mobile-nav">
         <ul>
             <li><a href="#">HOME</a></li>
@@ -2104,6 +2112,7 @@
         </div>
     </section>
 
+    <!-- NEW: Floating Go Up Button -->
     <button class="go-up-btn" id="goUpBtn">
         <i class="fas fa-chevron-up"></i>
     </button>
@@ -2292,6 +2301,7 @@
             });
         });
 
+        /* NEW: Go Up Button Functionality */
         const goUpBtn = document.getElementById('goUpBtn');
 
         // Show/hide button based on scroll position
@@ -2308,6 +2318,16 @@
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
+            });
+        });
+
+        /* NEW: Expandable Roadmap Functionality */
+        const timelineCards = document.querySelectorAll('.timeline-card');
+        
+        timelineCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const desc = this.querySelector('.timeline-desc');
+                desc.classList.toggle('expanded');
             });
         });
 
