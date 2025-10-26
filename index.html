@@ -995,7 +995,7 @@
         .timeline-title {
             font-size: 1rem;
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: 300;
             color: #2c3e50;
             position: relative;
         }
@@ -1010,11 +1010,20 @@
             color: #2ecc71;
             padding-left: 15px;
             margin-top: 8px;
+            list-style: none; /* remove default bullets */
         }
 
         .timeline-desc li {
             margin-bottom: 5px;
             position: relative;
+        }
+
+        .timeline-desc li::before {
+            content: "•"; /* bullet character */
+            position: absolute;
+            left: 0;
+            color: #2ecc71; /* your desired color */
+            font-weight: bold;
         }
 
         /* Status indicators */
@@ -1842,7 +1851,7 @@
                             <div class="timeline-desc">
                                 <p>Focused on Agriculture, Sports and Environment for youth empowerment...</p>
                                 <ul>
-                                    <li>Focused on Agriculture, Sports and Environment for youth empowerment</li>
+                                    <li>Working on Agriculture, Sports and Environment for youth empowerment</li>
                                     <li>Encourages sports and fitness</li>
                                     <li>Works with farmers and rural communities to promote sustainable agriculture</li>
                                     <li>Runs environment awareness and conservation initiatives at grassroots level</li>
